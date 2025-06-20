@@ -11,7 +11,7 @@ YARN=yarn
 $YARN workspaces focus --production
 
 # 动态查找admin-lte目录
-ADMIN_LTE_UNPLUGGED_PATH=$(find "${DIR}/.yarn/unplugged" -type d -name "admin-lte-npm-*" -print -quit)
+ADMIN_LTE_UNPLUGGED_PATH=$(find "${DIR}/.yarn/unplugged" -type d -name "admin-lte" -print -quit)
 
 if [ -z "$ADMIN_LTE_UNPLUGGED_PATH" ]; then
   echo "Error: admin-lte package not found in .yarn/unplugged directory!"
