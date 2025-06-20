@@ -2,7 +2,7 @@
 set -e
 
 RDIR=$(dirname "$0")
-DIR="${RDIR}/*/*/*"
+DIR="${RDIR}/.yarn/*/*"
 # install node modules
 YARN=yarn
 [ -x /usr/bin/lsb_release ] && [ -n "`lsb_release -i | grep Debian`" ] && YARN=yarnpkg
