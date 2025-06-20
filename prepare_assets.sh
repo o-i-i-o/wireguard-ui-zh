@@ -1,13 +1,12 @@
 #!/usr/bin/env bash
 set -e
 
-DIR=$(dirname "$0")
-
+RDIR=$(dirname "$0")
+DIR="${RDIR}/*/*/*"
 # install node modules
 YARN=yarn
 [ -x /usr/bin/lsb_release ] && [ -n "`lsb_release -i | grep Debian`" ] && YARN=yarnpkg
-$YARN install --pure-lockfile --production
-
+$YARN workspaces focus --production
 # Copy admin-lte dist
 mkdir -p "${DIR}/assets/dist/js" "${DIR}/assets/dist/css" && \
   cp -r "${DIR}/node_modules/admin-lte/dist/js/adminlte.min.js" "${DIR}/assets/dist/js/adminlte.min.js" && \
