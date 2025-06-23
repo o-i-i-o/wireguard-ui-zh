@@ -53,7 +53,7 @@ docker-compose up
 |`WGUI_TABLE`                   |默认的 WireGuard 表值设置|`auto`|
 |`WGUI_CONFIG_FILE_PATH`        |全局设置中使用的默认 WireGuard 配置文件路径|`/etc/wireguard/wg0.conf`|
 |`WGUI_LOG_LEVEL`               |默认日志级别，可选值：`DEBUG`、`INFO`、`WARN`、`ERROR`、`OFF`|`INFO`|
-|`WG_CONF_TEMPLATE`             |自定义的`wg.conf`配置文件模板，请参考我们的[默认模板](https://github.com/ngoduykhanh/wireguard-ui/blob/master/templates/wg.conf)|无|
+|`WG_CONF_TEMPLATE`             |自定义的`wg.conf`配置文件模板，请参考我们的[默认模板](https://github.com/o-i-i-o/wireguard-ui-zh/blob/master/templates/wg.conf)|无|
 |`EMAIL_FROM_ADDRESS`           |发件人电子邮件地址|无|
 |`EMAIL_FROM_NAME`              |发件人姓名|`WireGuard UI`|
 |`SENDGRID_API_KEY`             |SendGrid API 密钥|无|
