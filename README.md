@@ -10,7 +10,7 @@
 - **管理额外的客户端信息**（如姓名、电子邮件等）
 - **支持多种方式获取客户端配置**：通过二维码、文件、电子邮件或 Telegram 等途径。
 
-![wireguard-ui 0.3.7](https://user-images.githubusercontent.com/37958026/177041280-e3e7ca16-d4cf-4e95-9920-68af15e780dd.png)
+![wireguard-ui 0.3.7](picture.png)
 
 ### 运行 WireGuard - UI
 > ⚠️默认用户名和密码均为`admin`。为确保设置安全，请务必进行修改。
