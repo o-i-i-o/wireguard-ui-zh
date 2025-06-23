@@ -142,9 +142,9 @@ systemctl enable wgui.{path,service}
 systemctl start wgui.{path,service}
 ```
 
-### Using openrc
+### 使用openrc
 
-Create `/usr/local/bin/wgui` file and make it executable
+创建 `/usr/local/bin/wgui` 文件并赋予执行权限
 
 ```sh
 cd /usr/local/bin/
@@ -156,7 +156,7 @@ EOF
 chmod +x wgui
 ```
 
-Create `/etc/init.d/wgui` file and make it executable
+创建 `/etc/init.d/wgui` 文件并赋予执行权限
 
 ```sh
 cd /etc/init.d/
@@ -171,59 +171,53 @@ EOF
 chmod +x wgui
 ```
 
-Apply it
+应用设置
 
 ```sh
 rc-service wgui start
 rc-update add wgui default
 ```
 
-### Using Docker
+### 使用 Docker
 
-Set `WGUI_MANAGE_RESTART=true` to manage Wireguard interface restarts.
-Using `WGUI_MANAGE_START=true` can also replace the function of `wg-quick@wg0` service, to start Wireguard at boot, by
-running the container with `restart: unless-stopped`. These settings can also pick up changes to Wireguard Config File
-Path, after restarting the container. Please make sure you have `--cap-add=NET_ADMIN` in your container config to make
-this feature work.
+将WGUI_MANAGE_RESTART设置为true可管理 Wireguard 接口的重启。使用WGUI_MANAGE_START=true还可以替代wg-quick@wg0服务的功能，通过将容器运行时设置为restart: unless-stopped来在启动时启动 Wireguard。这些设置还可以在容器重启后获取对 Wireguard 配置文件路径的更改。请确保在容器配置中包含--cap-add=NET_ADMIN以使此功能正常工作。
 
-## Build
+## 构建
 
-### Build docker image
+### 构建 docker 镜像
 
-Go to the project root directory and run the following command:
+进入项目根目录并运行以下命令：
 
 ```sh
 docker build --build-arg=GIT_COMMIT=$(git rev-parse --short HEAD) -t wireguard-ui .
 ```
 
-or
+或者
 
 ```sh
 docker compose build --build-arg=GIT_COMMIT=$(git rev-parse --short HEAD)
 ```
 
-:information_source: A container image is available on [Docker Hub](https://hub.docker.com/r/ngoduykhanh/wireguard-ui)
-which you can pull and use
+:information_source: 您可以在Docker Hub上获取容器镜像，可通过以下命令拉取并使用： [Docker Hub](https://hub.docker.com/r/ngoduykhanh/wireguard-ui)
 
 ```
 docker pull ngoduykhanh/wireguard-ui
 ````
 
-### Build binary file
+### 编译二进制文件
 
-Prepare the assets directory
-
+提前生成 assets 资源
 ```sh
 ./prepare_assets.sh
 ```
 
-Then build your executable
+然后构建可执行文件
 
 ```sh
 go build -o wireguard-ui
 ```
 
-## License
+## 许可证
 
 许可证
 MIT 许可证，详情请见LICENSE。 [LICENSE](https://github.com/ngoduykhanh/wireguard-ui/blob/master/LICENSE).
