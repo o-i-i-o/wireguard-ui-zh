@@ -1,6 +1,10 @@
+/**
+ * 渲染客户端列表
+ * @param {Array} data - 包含客户端数据的数组
+ */
 function renderClientList(data) {
     $.each(data, function(index, obj) {
-        // render telegram button
+        // 渲染Telegram按钮
         let telegramButton = ''
         if (obj.Client.telegram_userid) {
             telegramButton =    `<div class="btn-group">      
@@ -15,19 +19,19 @@ function renderClientList(data) {
             telegramHtml = `<span class="info-box-text" style="display: none"><i class="fas fa-tguserid"></i>${obj.Client.telegram_userid}</span>`
         }
 
-        // render client status css tag style
+        // 渲染客户端状态的CSS标签样式
         let clientStatusHtml = '>'
         if (obj.Client.enabled) {
             clientStatusHtml = `style="visibility: hidden;">`
         }
 
-        // render client allocated ip addresses
+        // 渲染客户端已分配的IP地址
         let allocatedIpsHtml = "";
         $.each(obj.Client.allocated_ips, function(index, obj) {
             allocatedIpsHtml += `<small class="badge badge-secondary">${obj}</small>&nbsp;`;
         })
 
-        // render client allowed ip addresses
+        // 渲染客户端允许的IP地址
         let allowedIpsHtml = "";
         $.each(obj.Client.allowed_ips, function(index, obj) {
             allowedIpsHtml += `<small class="badge badge-secondary">${obj}</small>&nbsp;`;
@@ -43,7 +47,7 @@ function renderClientList(data) {
             additionalNotesHtml = `<span class="info-box-text" style="display: none"><i class="fas fa-additional_notes"></i>${obj.Client.additional_notes.toUpperCase()}</span>`
         }
 
-        // render client html content
+        // 渲染客户端HTML内容
         let html = `<div class="col-sm-6 col-md-6 col-lg-4" id="client_${obj.Client.id}">
                         <div class="info-box">
                             <div class="overlay" id="paused_${obj.Client.id}"` + clientStatusHtml
@@ -51,34 +55,34 @@ function renderClientList(data) {
                             </div>
                             <div class="info-box-content" style="overflow: hidden">
                                 <div class="btn-group">
-                                    <a href="download?clientid=${obj.Client.id}" class="btn btn-outline-primary btn-sm">Download</a>
+                                    <a href="download?clientid=${obj.Client.id}" class="btn btn-outline-primary btn-sm">下载</a>
                                 </div>
                                 <div class="btn-group">      
                                     <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal"
                                         data-target="#modal_qr_client" data-clientid="${obj.Client.id}"
-                                        data-clientname="${obj.Client.name}" ${obj.QRCode != "" ? '' : ' disabled'}>QR code</button>
+                                        data-clientname="${obj.Client.name}" ${obj.QRCode != "" ? '' : ' disabled'}>二维码</button>
                                 </div>
                                 <div class="btn-group">      
                                     <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal"
                                         data-target="#modal_email_client" data-clientid="${obj.Client.id}"
-                                        data-clientname="${obj.Client.name}">Email</button>
+                                        data-clientname="${obj.Client.name}">发送邮件</button>
                                 </div>
                                 ${telegramButton}
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-outline-danger btn-sm">More</button>
+                                    <button type="button" class="btn btn-outline-danger btn-sm">更多</button>
                                     <button type="button" class="btn btn-outline-danger btn-sm dropdown-toggle dropdown-icon" 
                                         data-toggle="dropdown">
                                     </button>
                                     <div class="dropdown-menu" role="menu">
                                         <a class="dropdown-item" href="#" data-toggle="modal"
                                         data-target="#modal_edit_client" data-clientid="${obj.Client.id}"
-                                        data-clientname="${obj.Client.name}">Edit</a>
+                                        data-clientname="${obj.Client.name}">编辑</a>
                                         <a class="dropdown-item" href="#" data-toggle="modal"
                                         data-target="#modal_pause_client" data-clientid="${obj.Client.id}"
-                                        data-clientname="${obj.Client.name}">Disable</a>
+                                        data-clientname="${obj.Client.name}">禁用</a>
                                         <a class="dropdown-item" href="#" data-toggle="modal"
                                         data-target="#modal_remove_client" data-clientid="${obj.Client.id}"
-                                        data-clientname="${obj.Client.name}">Delete</a>
+                                        data-clientname="${obj.Client.name}">删除</a>
                                     </div>
                                 </div>
                                 <hr>
@@ -93,50 +97,59 @@ function renderClientList(data) {
                                 <span class="info-box-text"><i class="fas fa-history"></i>
                                     ${prettyDateTime(obj.Client.updated_at)}</span>
                                 <span class="info-box-text"><i class="fas fa-server" style="${obj.Client.use_server_dns ? "opacity: 1.0" : "opacity: 0.5"}"></i>
-                                    ${obj.Client.use_server_dns ? 'DNS enabled' : 'DNS disabled'}</span>
+                                    ${obj.Client.use_server_dns ? '启用DNS' : '禁用DNS'}</span>
                                 <span class="info-box-text"><i class="fas fa-file"></i>
                                     ${obj.Client.additional_notes}</span>
-                                <span class="info-box-text"><strong>IP Allocation</strong></span>`
+                                <span class="info-box-text"><strong>IP分配</strong></span>`
                                 + allocatedIpsHtml
-                                + `<span class="info-box-text"><strong>Allowed IPs</strong></span>`
+                                + `<span class="info-box-text"><strong>允许的IP</strong></span>`
                                 + allowedIpsHtml
                             +`</div>
                         </div>
                     </div>`
 
-        // add the client html elements to the list
+        // 将客户端HTML元素添加到列表中
         $('#client-list').append(html);
     });
 }
 
+/**
+ * 渲染用户列表
+ * @param {Array} data - 包含用户数据的数组
+ */
 function renderUserList(data) {
     $.each(data, function(index, obj) {
         let clientStatusHtml = '>'
 
-        // render user html content
+        // 渲染用户HTML内容
         let html = `<div class="col-sm-6 col-md-6 col-lg-4" id="user_${obj.username}">
                         <div class="info-box">
                             <div class="info-box-content">
                                 <div class="btn-group">
-                                     <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#modal_edit_user" data-username="${obj.username}">Edit</button>
+                                     <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#modal_edit_user" data-username="${obj.username}">编辑</button>
                                 </div>
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-outline-danger btn-sm" data-toggle="modal"
-                                        data-target="#modal_remove_user" data-username="${obj.username}">Delete</button>
+                                        data-target="#modal_remove_user" data-username="${obj.username}">删除</button>
                                 </div>
                                 <hr>
                                 <span class="info-box-text"><i class="fas fa-user"></i> ${obj.username}</span>
-                                <span class="info-box-text"><i class="fas fa-terminal"></i> ${obj.admin? 'Administrator':'Manager'}</span>
+                                <span class="info-box-text"><i class="fas fa-terminal"></i> ${obj.admin? '管理员' : '经理'}</span>
                                 </div>
                         </div>
                     </div>`
 
-        // add the user html elements to the list
+        // 将用户HTML元素添加到列表中
         $('#users-list').append(html);
     });
 }
 
 
+/**
+ * 格式化日期时间
+ * @param {string} timeStr - 时间字符串
+ * @returns {string} 格式化后的本地时间字符串
+ */
 function prettyDateTime(timeStr) {
     const dt = new Date(timeStr);
     const offsetMs = dt.getTimezoneOffset() * 60 * 1000;
