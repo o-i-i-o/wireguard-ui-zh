@@ -1,5 +1,5 @@
 {{ define "title"}}
-About
+关于
 {{ end }}
 
 {{ define "top_css"}}
@@ -10,46 +10,46 @@ About
 {{ end }}
 
 {{ define "page_title"}}
-About
+关于
 {{ end }}
 
 {{ define "page_content"}}
 <section class="content">
     <div class="container-fluid">
-        <!-- <h5 class="mt-4 mb-2">Global Settings</h5> -->
+        <!-- <h5 class="mt-4 mb-2">全局设置</h5> -->
         <div class="row">
-            <!-- left column -->
+            <!-- 左列 -->
             <div class="col-md-6">
                 <div class="card card-success">
                     <div class="card-header">
-                        <h3 class="card-title">About Wireguard-UI</h3>
+                        <h3 class="card-title">关于 Wireguard-UI</h3>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="version" class="control-label">Current version</label>
+                            <label for="version" class="control-label">当前版本</label>
                             <input type="text" class="form-control" id="version" value="{{ .appVersion }}" readonly>
                         </div>
 {{ if .gitCommit }}
                         <div class="form-group">
-                            <label for="version" class="control-label">git commit hash</label>
+                            <label for="version" class="control-label">git 提交哈希值</label>
                             <input type="text" class="form-control" id="version" value="{{ .gitCommit }}" readonly>
                         </div>
 {{ end }}
                         <div class="form-group">
-                            <label for="currentReleaseDate" class="control-label">Current version release date</label>
+                            <label for="currentReleaseDate" class="control-label">当前版本发布日期</label>
                             <input type="text" class="form-control" id="currentReleaseDate" readonly>
                         </div>
                         <div class="form-group">
-                            <label for="latestRelease" class="control-label">Latest release</label>
+                            <label for="latestRelease" class="control-label">最新版本</label>
                             <input type="text" class="form-control" id="latestRelease" readonly>
                         </div>
                         <div class="form-group">
-                            <label for="latestReleaseDate" class="control-label">Latest release date</label>
+                            <label for="latestReleaseDate" class="control-label">最新版本发布日期</label>
                             <input type="text" class="form-control" id="latestReleaseDate" readonly>
                         </div>
                         <div class="form-group">
-                            <label for="author" class="control-label">Author</label>
+                            <label for="author" class="control-label">作者</label>
                             <div id="author">
                                 <a id="authorLink">
                                     <img id="authorImage"
@@ -58,13 +58,13 @@ About
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="contributors" class="control-label">Contributors</label>
+                            <label for="contributors" class="control-label">贡献者</label>
                             <div id="contributors"></div>
                         </div>
-                        <strong>Copyright &copy;
+                        <strong>版权所有 &copy;
                             <script>document.write(new Date().getFullYear())</script>
-                            <a href="https://github.com/ngoduykhanh/wireguard-ui">Wireguard UI</a>.
-                        </strong> All rights reserved.
+                            <a href="https://github.com/ngoduykhanh/wireguard-ui">Wireguard UI</a>。
+                        </strong> 保留所有权利。
 
                     </div>
                 </div>
@@ -91,7 +91,7 @@ About
 
             },
             error: function (jqXHR, exception) {
-                $("#currentReleaseDate").attr("value", "Could not find this version on GitHub.com");
+                $("#currentReleaseDate").attr("value", "无法在 GitHub.com 上找到此版本");
             }
         });
 
@@ -112,9 +112,9 @@ About
 
             },
             error: function (jqXHR, exception) {
-                $("#latestRelease").attr("value", "Could not connect to GitHub.com");
-                $("#latestReleaseDate").attr("value", "Could not connect to GitHub.com");
-                $("#author").attr("value", "Could not connect to GitHub.com");
+                $("#latestRelease").attr("value", "无法连接到 GitHub.com");
+                $("#latestReleaseDate").attr("value", "无法连接到 GitHub.com");
+                $("#author").attr("value", "无法连接到 GitHub.com");
             }
         });
 
@@ -129,14 +129,14 @@ About
                     "<img src=\"" + contributor.avatar_url + "\" style=\"width: 50px; height: 50px; border-radius: 50%; border: 1px solid #000; margin: 5px;\"/></a>"));
             },
             error: function (jqXHR, exception) {
-                $("#contributors").html("<p>Could not connect to GitHub.com</p>");
+                $("#contributors").html("<p>无法连接到 GitHub.com</p>");
             }
         });
     });
 
     $(document).ajaxStop(function () {
         if (Date.parse($("#currentReleaseDate").val()) < Date.parse($("#latestReleaseDate").val())) {
-            $("#currentReleaseDate").after("<p style=\"color:red\">Current version is out of date</p>")
+            $("#currentReleaseDate").after("<p style=\"color:red\">当前版本已过时</p>")
         }
     });
 
