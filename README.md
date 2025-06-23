@@ -219,7 +219,6 @@ go build -o wireguard-ui
 
 ## 许可证
 
-许可证
 MIT 许可证，详情请见LICENSE。 [LICENSE](https://github.com/ngoduykhanh/wireguard-ui/blob/master/LICENSE).
 
 
