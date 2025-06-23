@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>WireGuard 管理界面</title>
+    <!-- 告诉浏览器对屏幕宽度作出响应 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 网站图标 -->
+    <link rel="icon" href="{{.basePath}}/favicon">
+
+    <!-- Font Awesome 图标库 -->
+    <link rel="stylesheet" href="{{.basePath}}/static/plugins/fontawesome-free/css/all.min.css">
+    <!-- Ionicons 图标库 -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- icheck 样式 -->
+    <link rel="stylesheet" href="{{.basePath}}/static/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <!-- 主题样式 -->
+    <link rel="stylesheet" href="{{.basePath}}/static/dist/css/adminlte.min.css">
+    <!-- Google 字体 -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+</head>
+
+<body class="hold-transition login-page">
+    <div class="login-box">
+        <div class="login-logo">
+            <a href="https://github.com/ngoduykhanh/wireguard-ui">WireGuard 管理界面</a>
+        </div>
+        <!-- /.login-logo -->
+        <div class="card">
+            <div class="card-body login-card-body">
+                <p class="login-box-msg">登录以开始您的会话</p>
+                <form action="" method="post">
+                    <div class="input-group mb-3">
+                        <input id="username" type="text" class="form-control" placeholder="用户名">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-user"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input id="password" type="password" class="form-control" placeholder="密码">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="icheck-primary">
+                                <input type="checkbox" id="remember">
+                                <label for="remember">
+                                    记住我
+                                </label>
+                            </div>
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-4">
+                            <button id="btn_login" type="submit" class="btn btn-primary btn-block">登录</button>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                </form>
+                <div class="text-center mb-3">
+                    <p id="message"></p>
+                </div>
+            </div>
+            <!-- /.login-card-body -->
+        </div>
+    </div>
+    <!-- /.login-box -->
+    <!-- jQuery 库 -->
+    <script src="{{.basePath}}/static/plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 库 -->
+    <script src="{{.basePath}}/static/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- AdminLTE 应用脚本 -->
+    <script src="{{.basePath}}/static/dist/js/adminlte.min.js"></script>
+
+</body>
+<script>
+    // 登录成功后重定向到指定页面
+    function redirectNext() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const nextURL = urlParams.get('next');
+        if (nextURL && /(?:^\/[a-zA-Z_])|(?:^\/$)/.test(nextURL.trim())) {
+            window.location.href = nextURL;
+        } else {
+            window.location.href = '/{{.basePath}}';
+        } 
+    }
+</script>
+<script>
+    $(document).ready(function () {
+        // 表单提交事件处理
+        $('form').on('submit', function(e) {
+            e.preventDefault();
+            $("#btn_login").trigger('click');
+        });
+
+        // 登录按钮点击事件处理
+        $("#btn_login").click(function () {
+            const username = $("#username").val();
+            const password = $("#password").val();
+            let rememberMe = false;
+            if ($("#remember").is(':checked')){
+                rememberMe = true;
+            }
+            const data = {"username": username, "password": password, "rememberMe": rememberMe}
+
+            // 发送登录请求
+            $.ajax({
+                cache: false,
+                method: 'POST',
+                url: '{{.basePath}}/login',
+                dataType: 'json',
+                contentType: "application/json",
+                data: JSON.stringify(data),
+                success: function(data) {
+                    // 登录成功提示
+                    document.getElementById("message").innerHTML = `<p style="color:green">${data['message']}</p>`;
+                    // 登录成功后重定向
+                    redirectNext();
+                },
+                error: function(jqXHR, exception) {
+                    // 登录失败提示
+                    const responseJson = jQuery.parseJSON(jqXHR.responseText);
+                    document.getElementById("message").innerHTML = `<p style="color:#ff0000">${responseJson['message']}</p>`;
+                }
+            });
+        });
+    });
+</script>
+</html>

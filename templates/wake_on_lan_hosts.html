@@ -1,0 +1,123 @@
+{{define "title"}}
+    网络唤醒主机
+{{end}}
+
+{{define "top_css"}}
+{{end}}
+
+{{define "username"}}
+    {{ .username }}
+{{end}}
+
+{{define "page_title"}}
+    网络唤醒主机
+{{end}}
+
+{{define "page_content"}}
+
+    <div class="modal fade" id="modal_wake_on_lan_host">
+        <!--    MacAddress      string `json:"MacAddress"`-->
+        <!--    Name            string `json:"Name"`-->
+        <!--    LatestIPAddress string `json:"LatestIPAddress"`-->
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">新建网络唤醒主机</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="关闭">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form name="frm_wake_on_lan_host" id="frm_wake_on_lan_host">
+                    <div class="modal-body">
+                        <input type="hidden" id="frm_wake_on_lan_host_old_mac_address" name="old_mac_address">
+                        <div class="form-group">
+                            <label for="frm_wake_on_lan_host_name" class="control-label">名称</label>
+                            <input type="text" class="form-control" id="frm_wake_on_lan_host_name" name="name">
+                        </div>
+                        <div class="form-group">
+                            <label for="frm_wake_on_lan_host_mac_address" class="control-label">MAC地址</label>
+                            <input type="text" class="form-control" id="frm_wake_on_lan_host_mac_address"
+                                   name="mac_address">
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        <button type="submit" class="btn btn-primary">提交</button>
+                    </div>
+                </form>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal_remove_wake_on_lan_host">
+        <div class="modal-dialog">
+            <div class="modal-content bg-danger">
+                <div class="modal-header">
+                    <h4 class="modal-title">删除</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="关闭">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-outline-dark" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-outline-dark" id="remove_wake_on_host_confirm">应用</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+    <section class="content">
+        <div class="container-fluid">
+            {{ if .error }}
+                <div class="alert alert-warning" role="alert">{{.error}}</div>
+            {{ end}}
+
+            <div class="row">
+                {{ range $idx, $host := .hosts }}
+                    {{- /*类型: github.com/ngoduykhanh/wireguard-ui/model.WakeOnLanHost*/ -}}
+                    <div class="col-sm-4" id="{{ $host.ResolveResourceName }}">
+                        <div class="info-box">
+                            <div class="info-box-content">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-outline-success btn-sm"
+                                            data-mac-address="{{ .MacAddress }}">唤醒
+                                    </button>
+                                    <button type="button"
+                                            class="btn btn-outline-primary btn-sm btn_modify_wake_on_lan_host"
+                                            data-toggle="modal" data-target="#modal_wake_on_lan_host"
+                                            data-name="{{ .Name }}" data-mac-address="{{ .MacAddress }}">编辑
+                                    </button>
+                                    <button type="button" class="btn btn-outline-danger btn-sm" data-toggle="modal"
+                                            data-target="#modal_remove_wake_on_lan_host"
+                                            data-mac-address="{{ .MacAddress }}">删除
+                                    </button>
+                                </div>
+                                <hr>
+                                <span class="info-box-text"><i class="fas fa-address-card"></i> <span class="name">{{ .Name }}</span></span>
+                                <span class="info-box-text"><i class="fas fa-ethernet"></i> <span class="mac-address">{{ .MacAddress }}</span></span>
+                                <span class="info-box-text"><i class="fas fa-clock"></i>
+                                    <span class="latest-used">
+                                        {{ if .LatestUsed }}
+                                            {{ .LatestUsed.Format "2006-01-02T15:04:05Z07:00"}}
+                                        {{ else }}
+                                            未使用
+                                        {{ end }}
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                {{ end }}
+            </div>
+        </div>
+    </section>
+
+{{end}}
+{{define "bottom_js"}}
+    <script src="{{.basePath}}/static/custom/js/wake_on_lan_hosts.js"></script>
+{{end}}

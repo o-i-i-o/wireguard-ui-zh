@@ -1,0 +1,132 @@
+{{ define "title"}}
+个人资料
+{{ end }}
+
+{{ define "top_css"}}
+{{ end }}
+
+{{ define "username"}}
+{{ .username }}
+{{ end }}
+
+{{ define "page_title"}}
+个人资料
+{{ end }}
+
+{{ define "page_content"}}
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <!-- 左侧列 -->
+            <div class="col-md-6">
+                <div class="card card-success">
+                    <div class="card-header">
+                        <h3 class="card-title">更新用户信息</h3>
+                    </div>
+                    <!-- 表单开始 -->
+                    <form role="form" id="frm_profile" name="frm_profile">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="username" class="control-label">用户名</label>
+                                <input type="text" class="form-control" name="username" id="username"
+                                       value="">
+                            </div>
+                            <div class="form-group">
+                                <label for="password" class="control-label">密码</label>
+                                <input type="password" class="form-control" name="password" id="password"
+                                       value="" placeholder="留空以保持密码不变">
+                            </div>
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-success" id="update">更新</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- 卡片结束 -->
+            </div>
+        </div>
+    </div>
+</section>
+{{ end }}
+
+{{ define "bottom_js"}}
+<script>
+    {
+        var 之前的用户名;
+        var 管理员权限;
+    }
+    $(document).ready(function () {
+        $.ajax({
+            cache: false,
+            method: 'GET',
+            url: '{{.basePath}}/api/user/{{.baseData.CurrentUser}}',
+            dataType: 'json',
+            contentType: "application/json",
+            success: function (resp) {
+                const 用户 = resp;
+                $("#username").val(用户.username);
+                之前的用户名 = 用户.username;
+                管理员权限 = 用户.admin;
+            },
+            error: function (jqXHR, exception) {
+                const 响应数据 = jQuery.parseJSON(jqXHR.responseText);
+                toastr.error(响应数据['message']);
+            }
+        });
+    });
+
+
+    function 更新用户信息() {
+        const 用户名 = $("#username").val();
+        const 密码 = $("#password").val();
+        const 数据 = {"username": 用户名, "password": 密码, "previous_username": 之前的用户名, "admin":管理员权限};
+        $.ajax({
+            cache: false,
+            method: 'POST',
+            url: '{{.basePath}}/update-user',
+            dataType: 'json',
+            contentType: "application/json",
+            data: JSON.stringify(数据),
+            success: function (数据) {
+                toastr.success("成功更新用户信息");
+                location.reload();
+            },
+            error: function (jqXHR, exception) {
+                const 响应数据 = jQuery.parseJSON(jqXHR.responseText);
+                toastr.error(响应数据['message']);
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        $.validator.setDefaults({
+            submitHandler: function () {
+                更新用户信息();
+            }
+        });
+        $("#frm_profile").validate({
+            rules: {
+                username: {
+                    required: true
+                }
+            },
+            messages: {
+                username: {
+                    required: "请输入用户名",
+                }
+            },
+            errorElement: 'span',
+            errorPlacement: function (错误, 元素) {
+                错误.addClass('invalid-feedback');
+                元素.closest('.form-group').append(错误);
+            },
+            highlight: function (元素, 错误类, 有效类) {
+                $(元素).addClass('is-invalid');
+            },
+            unhighlight: function (元素, 错误类, 有效类) {
+                $(元素).removeClass('is-invalid');
+            }
+        });
+    });
+</script>
+{{ end }}
