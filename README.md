@@ -198,7 +198,7 @@ docker build --build-arg=GIT_COMMIT=$(git rev-parse --short HEAD) -t wireguard-u
 docker compose build --build-arg=GIT_COMMIT=$(git rev-parse --short HEAD)
 ```
 
-:information_source: 您可以在Docker Hub上获取容器镜像，可通过以下命令拉取并使用： [Docker Hub](https://hub.docker.com/r/ngoduykhanh/wireguard-ui)
+:information_source: （我不会用docker，所以没有我构建的镜像，原版镜像是未翻译的）您可以在Docker Hub上获取容器镜像，可通过以下命令拉取并使用： [Docker Hub](https://hub.docker.com/r/ngoduykhanh/wireguard-ui)
 
 ```
 docker pull ngoduykhanh/wireguard-ui
