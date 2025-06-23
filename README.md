@@ -211,8 +211,7 @@ docker pull ngoduykhanh/wireguard-ui
 ```sh
 ./prepare_assets.sh
 ```
-！注意：此脚本依赖yarn，经测试yarn1.22.22版本可用，yarn4.9.2不可用。
-！因此在本项目里集成了这些静态资源，如果需要实时更新的组件资源，请删除assets文件夹，然后运行脚本。
+:information_source: 注意：此脚本依赖yarn，经测试yarn1.22.22版本可用，yarn4.x.x版本不可用,因此在本项目里集成了这些静态资源，如果需要实时更新的组件资源，请删除assets文件夹，然后运行脚本。
 
 然后构建可执行文件
 
