@@ -210,13 +210,14 @@ docker pull ngoduykhanh/wireguard-ui
 ```sh
 ./prepare_assets.sh
 ```
+！注意：此脚本依赖yarn，经测试yarn1.22.22版本可用，yarn4.9.2不可用。
+
 
 然后构建可执行文件
 
 ```sh
 go build -o wireguard-ui
 ```
-
 ## 许可证
 
 MIT 许可证，详情请见[LICENSE](https://github.com/ngoduykhanh/wireguard-ui/blob/master/LICENSE)。
