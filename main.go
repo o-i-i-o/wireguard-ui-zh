@@ -343,7 +343,7 @@ func getCSTBuildTime() string {
 	loc, err := time.LoadLocation("Asia/Shanghai")
 	if err != nil {
 		// 时区加载失败时返回UTC时间
-		return time.Now().Format("2006-01-02 15:04:05")
+		return time.Now().Format("01-02-2006 15:04:05")
 	}
 	// 转换为CST时间并格式化
 	return time.Now().In(loc).Format("2006-01-02 15:04:05")
