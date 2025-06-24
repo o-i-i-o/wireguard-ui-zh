@@ -30,7 +30,7 @@ var (
 	appVersion = "开发版本"
 	gitCommit  = "N/A"
 	gitRef     = "N/A"
-	buildTime  = fmt.Sprintf(time.Now().UTC().Format("01-02-2006 15:04:05"))
+	buildTime  = getCSTBuildTime() // 使用函数获取CST时间
 	// 配置变量
 	flagDisableLogin             = false     // 禁用应用程序的身份验证，这可能存在安全风险
 	flagBindAddress              = "0.0.0.0:5000" // 应用程序绑定的地址和端口
@@ -335,4 +335,16 @@ func initTelegram(initDeps telegram.TgBotInitDependencies) {
 			}
 		}
 	}()
+}
+
+//获取CST时间
+func getCSTBuildTime() string {
+	// 加载中国标准时区（UTC+8）
+	loc, err := time.LoadLocation("Asia/Shanghai")
+	if err != nil {
+		// 时区加载失败时返回UTC时间
+		return time.Now().Format("01-02-2006 15:04:05")
+	}
+	// 转换为CST时间并格式化
+	return time.Now().In(loc).Format("01-02-2006 15:04:05")
 }
