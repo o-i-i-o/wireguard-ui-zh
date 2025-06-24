@@ -1,5 +1,6 @@
 ### wireguard-ui-zh
 对wireguard-ui进行简单粗暴机器翻译的项目
+使用此程序前请务必使用https://github.com/o-i-i-o/wireguard-install 脚本安装wireguard本体程序。
 
 ### wireguard-ui
 一款用于管理 WireGuard 设置的 Web 用户界面。
