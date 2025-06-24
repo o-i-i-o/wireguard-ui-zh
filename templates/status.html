@@ -63,7 +63,7 @@
                 <td title="{{ $peer.ReceivedBytes }} 字节"><script>document.write(bytesToHumanReadable({{ $peer.ReceivedBytes }}))</script></td>
                 <td title="{{ $peer.TransmitBytes }} 字节"><script>document.write(bytesToHumanReadable({{ $peer.TransmitBytes }}))</script></td>
                 <td>{{ if $peer.Connected }}✓{{end}}</td>
-                <td>{{ $peer.LastHandshakeTime.Format "2006-01-02 15:04:05 MST" }}</td>
+                <td>{{ $peer.LastHandshakeTime.Format "2006-01-02 15:04:05 CST" }}</td>
                </tr>
               {{ end }}
               </tbody>
