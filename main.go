@@ -30,7 +30,7 @@ var (
 	appVersion = "开发版本"
 	gitCommit  = "N/A"
 	gitRef     = "N/A"
-	buildTime  = fmt.Sprintf(time.Now().UTC().Format("01-02-2006 15:04:05"))
+	buildTime  = fmt.Sprintf(time.Now().CST().Format("01-02-2006 15:04:05"))
 	// 配置变量
 	flagDisableLogin             = false     // 禁用应用程序的身份验证，这可能存在安全风险
 	flagBindAddress              = "0.0.0.0:5000" // 应用程序绑定的地址和端口
